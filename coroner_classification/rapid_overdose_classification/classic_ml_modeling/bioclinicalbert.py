@@ -4,7 +4,6 @@ import mlflow
 import matplotlib.pyplot as plt
 from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 from model_tuner import Model, dumpObjects
-import sklearnex
 from sklearn.model_selection import train_test_split
 from sklearn.base import clone
 from xgboost import XGBClassifier
@@ -28,11 +27,17 @@ from rapid_overdose_classification.config import (
     MODEL_SCORING_METRIC,
     OPTIMAL_THRESH,
     KFOLD,
+    MAC_OS,
 )
 
 
 def bioclinicalbert_single_label(drug):
-    sklearnex.patch_sklearn()
+
+    if not MAC_OS:
+        import sklearnex
+
+        sklearnex.patch_sklearn()
+
     drug_df = pd.read_pickle(PROCESSED_DATA_BIOCLINICALBERT_DIR)
 
     mlflow.set_tracking_uri(MLFLOW_URI)

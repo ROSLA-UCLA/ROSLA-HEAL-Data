@@ -8,7 +8,6 @@ import mlflow
 import matplotlib.pyplot as plt
 from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 from model_tuner import Model, dumpObjects
-import sklearnex
 from sklearn.model_selection import train_test_split
 from sklearn.base import clone
 from tqdm import tqdm
@@ -26,6 +25,7 @@ from rapid_overdose_classification.config import (
     MODEL_SCORING_METRIC,
     KFOLD,
     OPTIMAL_THRESH,
+    MAC_OS,
 )
 from xgboost import XGBClassifier
 import typer
@@ -37,7 +37,10 @@ def glove_single_label(drug):
     drug_df['GloVE_proc'] contains the glove embeddings.
     These will be logged to a different location on MLFlow.
     """
-    sklearnex.patch_sklearn()
+    if not MAC_OS:
+        import sklearnex
+
+        sklearnex.patch_sklearn()
 
     experiment_name = f"GloVe Embeddings Bootstrapped"
     mlflow.set_tracking_uri(MLFLOW_URI)

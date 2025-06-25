@@ -9,6 +9,7 @@ from sklearn.multioutput import MultiOutputClassifier
 
 MLFLOW_URI = "http://127.0.0.1:5000"
 
+MAC_OS = True
 
 """Model training configurations MULTI LABEL"""
 

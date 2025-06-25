@@ -16,7 +16,6 @@ from rapid_overdose_classification.constants import (
     MULTI_LABEL_MODEL_TYPES,
 )
 from sklearn.metrics import hamming_loss, make_scorer
-from sklearnex import patch_sklearn
 from sklearn.metrics import multilabel_confusion_matrix
 from model_tuner.bootstrapper import evaluate_bootstrap_metrics
 import typer
@@ -29,6 +28,7 @@ from rapid_overdose_classification.config import (
     multi_label_model_parameters,
     MULTI_LABEL_BOOTSTRAP_METRICS,
     MULTI_LABEL_N_ITER,
+    MAC_OS,
 )
 
 
@@ -44,7 +44,11 @@ def multi_label_classifier(model_type):
     if model_type not in MULTI_LABEL_MODEL_TYPES:
         raise ValueError(f"Model type must be one of {MULTI_LABEL_MODEL_TYPES}")
 
-    patch_sklearn()
+    if not MAC_OS:
+        import sklearnex
+
+        sklearnex.patch_sklearn()
+
     mlflow.set_tracking_uri(MLFLOW_URI)
     experiment_name = f"Multi Label"
     mlflow.set_experiment(experiment_name)

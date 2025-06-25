@@ -8,7 +8,6 @@ import mlflow
 import matplotlib.pyplot as plt
 from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 from model_tuner import Model, dumpObjects
-import sklearnex
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
@@ -31,6 +30,7 @@ from rapid_overdose_classification.config import (
     OPTIMAL_THRESH,
     MODEL_SCORING_METRIC,
     KFOLD,
+    MAC_OS,
 )
 import typer
 
@@ -49,7 +49,11 @@ easier to have one file.
 
 
 def tf_idf_single_label(drug):
-    sklearnex.patch_sklearn()
+    if not MAC_OS:
+        import sklearnex
+
+        sklearnex.patch_sklearn()
+
     mlflow.set_tracking_uri(MLFLOW_URI)
 
     experiment_name = f"TFIDF Bootstrapped"
