@@ -2,9 +2,7 @@
 
 This project contains the code that was written to train and evaluate BERT models and classic ML models on classifying drug overdose data.
 
-The data used in this project conists of the coroner data from David Goodman's [similar work](https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2794977) classifying free text inputs, as well as a new
-
-external dataset.
+The data used in this project conists of the coroner data from David Goodman's [similar work](https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2794977) classifying free text inputs, as well as a new external dataset.
 
 Mlflow needs to be started in the background to log all the information.
 
